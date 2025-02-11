@@ -12,11 +12,11 @@
             <div class="container-inputs">
                 <h3>Bem-vindo</h3>
                 <h1>Faça o seu cadastro</h1>
-                <label for="name">Nome</label>
+                <label for="name" id="labelNome">Nome</label>
                 <Input type="text" id="name" placeholder="Fulano de tal"></Input>
-                <label for="email">E-mail</label>
+                <label for="email" id="labelSenha">E-mail</label>
                 <Input type="email" id="email" placeholder="exemplo@gmail.com"></Input>
-                <label for="senha">Senha</label>
+                <label for="senha" id="labelSenha">Senha</label>
                 <Input type="password" id="senha" placeholder="@Abc123"></Input>                
             </div>
             <div class="container-btn">
@@ -60,6 +60,12 @@ Button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+h1, h3, #labelEmail, #labelSenha, #labelNome {
+    align-self: flex-start;
+    width: 100%;
+    padding-left: 275px;
 }
 
 .container-btn {
