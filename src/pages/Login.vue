@@ -1,6 +1,32 @@
 <script setup lang="ts">
     import Button from '../components/Button/index.vue';
     import Input from '../components/Input/index.vue';
+
+    import { ref } from 'vue';
+    import axios from 'axios';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+
+    const email = ref('');
+    const password = ref('');
+    const errorMessage = ref('');
+
+    const login = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/auth/login', {
+                username: email.value,
+                password: password.value,
+            })
+
+            const token = response.data.token; // Pegando o token da resposta
+            localStorage.setItem('token', token) // Armazena o token no localStorage
+
+            router.push('/dashboard');
+        } catch (error) {
+            errorMessage.value = "E-mail ou senha incorretos";
+        }
+    }
 </script>
 
 <template>
@@ -12,10 +38,15 @@
             <div class="container-inputs">
                 <h3>Bem-vindo de volta</h3>
                 <h1>Faça login na sua conta</h1>
+
                 <label for="email" id="labelEmail">E-mail</label>
-                <Input type="email" id="email" placeholder="exemplo@gmail.com"></Input>
+                <Input type="email" id="email" placeholder="exemplo@gmail.com" v-model="email"></Input>
+                
                 <label for="senha" id="labelSenha">Senha</label>
-                <Input type="password" id="senha" placeholder="@Abc123"></Input>
+                <Input type="password" id="senha" placeholder="@Abc123" v-model="password"></Input>
+
+                <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+
                 <div class="container-lembrar">
                     <div class="container-checkbox">
                         <input type="checkbox" id="lembrar">
@@ -25,7 +56,9 @@
                 </div>
             </div>
             <div class="container-btn">
-                <Button color="primary">Entrar na conta</Button>
+                
+                <Button color="primary" @click="login">Entrar na conta</Button>
+
                 <Button color="secondary">
                     <img src="../assets/google.png" alt="logo do google"  class="google-logo" />
                     Faça login com Google
