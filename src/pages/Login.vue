@@ -38,12 +38,10 @@
             <div class="container-inputs">
                 <h3>Bem-vindo de volta</h3>
                 <h1>Faça login na sua conta</h1>
-
-                <label for="email" id="labelEmail">E-mail</label>
-                <Input type="email" id="email" placeholder="exemplo@gmail.com" v-model="email"></Input>
                 
-                <label for="senha" id="labelSenha">Senha</label>
-                <Input type="password" id="senha" placeholder="@Abc123" v-model="password"></Input>
+                <Input type="email" id="email" placeholder="E-mail" v-model="email"></Input>
+                
+                <Input type="password" id="senha" placeholder="Senha" v-model="password"></Input>
 
                 <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 
@@ -135,8 +133,8 @@ h1, h3, #labelEmail, #labelSenha {
 .container-lembrar {
     display: flex;
     gap: 114px;
-    margin: 12px; 
-    margin-bottom: 56px;
+    margin: 12px;
+    margin-bottom: 24px; 
 }
 
 #esqueceu,
@@ -152,7 +150,7 @@ h3 {
 .container-cad {
     display: flex;
     gap: 12px;
-    margin-top: 64px;
+    margin-top: 24px;
 }
 
 </style>

@@ -36,14 +36,11 @@
                 <h3>Bem-vindo</h3>
                 <h1>Faça o seu cadastro</h1>
 
-                <label for="name" id="labelNome">Nome</label>
-                <Input type="text" id="name" placeholder="Fulano de tal" v-model="username"></Input>
+                <Input type="text" id="name" placeholder="Nome" v-model="username"></Input>
                 
-                <label for="email" id="labelSenha">E-mail</label>
-                <Input type="email" id="email" placeholder="exemplo@gmail.com" v-model="email"></Input>
+                <Input type="email" id="email" placeholder="E-mail" v-model="email"></Input>
                 
-                <label for="senha" id="labelSenha">Senha</label>
-                <Input type="password" id="senha" placeholder="@Abc123" v-model="password"></Input>                
+                <Input type="password" id="senha" placeholder="Senha" v-model="password"></Input>                
             </div>
             <div class="container-btn">
                 <Button color="primary" @click="register">Cadastrar</Button>
