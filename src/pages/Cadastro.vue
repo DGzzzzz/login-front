@@ -4,11 +4,14 @@
 
     import axios, { AxiosError } from "axios";
     import { ref, watch } from 'vue';
+    import { useRouter } from 'vue-router';
 
     const username = ref('');
     const password = ref('');
     const email = ref('');
     const emailMessage = ref('');
+
+    const router = useRouter();
 
     const register = async () => {
         try {
@@ -20,6 +23,7 @@
 
             console.log('Usuário cadastrado com sucesso: ');
             alert('Cadastro realizado com sucesso!');
+            router.push('/');
         } catch (error) {
             console.error('Erro ao cadastrar: ', error);
             alert('Erro ao cadastrar usuário');
