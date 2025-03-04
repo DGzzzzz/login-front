@@ -2,7 +2,7 @@
     import Button from '../components/Button/index.vue';
     import Input from '../components/Input/index.vue';
 
-    import axios from "axios";
+    import axios, { AxiosError } from "axios";
     import { ref, watch } from 'vue';
 
     const username = ref('');
@@ -29,11 +29,14 @@
     watch(email, async (newEmail) => {
         if(newEmail.includes("@")) {
             try {
-                const response = await axios.get(`http://localhost:8080/auth/check-email?email=${newEmail}`);
-                emailMessage.value = response.data.message;
+                await axios.get(`http://localhost:8080/auth/check-email?email=${newEmail}`);
+                emailMessage.value = "";
             } catch (error) {
-                if (error.response && error.response.data.message) {
-                    emailMessage.value = error.response.data.message;
+
+                const err = error as AxiosError;
+
+                if (err.response && err.response.data) {
+                    emailMessage.value = (err.response.data as { message: string }).message;
                 } else {
                     emailMessage.value = "Erro ao verificar E-mail";
                 }
