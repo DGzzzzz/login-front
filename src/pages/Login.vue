@@ -11,6 +11,8 @@
     const email = ref('');
     const password = ref('');
     const errorMessage = ref('');
+    const errorEmail = ref(false);
+    const errorPassword = ref(false);
 
     const login = async () => {
         try {
@@ -23,8 +25,15 @@
             localStorage.setItem('token', token) // Armazena o token no localStorage
 
             router.push('/dashboard');
+
+            errorEmail.value = false;
+            errorPassword.value = false;
+            errorMessage.value = "";
         } catch (error) {
             errorMessage.value = "E-mail ou senha incorretos";
+
+            errorEmail.value = true;
+            errorPassword.value = true;
         }
     }
 </script>
@@ -39,9 +48,9 @@
                 <h3>Bem-vindo de volta</h3>
                 <h1>Faça login na sua conta</h1>
                 
-                <Input type="email" id="email" placeholder="E-mail" v-model="email"></Input>
+                <Input type="email" id="email" placeholder="E-mail" v-model="email" :error="errorEmail"></Input>
                 
-                <Input type="password" id="senha" placeholder="Senha" v-model="password"></Input>
+                <Input type="password" id="senha" placeholder="Senha" v-model="password" :error="errorPassword"></Input>
 
                 <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 
@@ -71,6 +80,10 @@
 </template>
 
 <style scoped>
+
+.error {
+ color: red;
+}
 
 Button:hover {
  opacity: 0.8;

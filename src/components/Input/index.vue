@@ -7,6 +7,7 @@ const props = defineProps<{
     id: string;
     placeholder: string;
     modelValue: string;
+    error?: boolean;
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
@@ -29,6 +30,7 @@ watch(() => props.modelValue, (newValue) => {
       :type="type" 
       :id="id" 
       class="base-input" 
+      :class="{ 'input-error': error }"
       :value="modelValue" 
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       @focus="isFocused = true"
@@ -56,6 +58,10 @@ watch(() => props.modelValue, (newValue) => {
   box-sizing: border-box;
   margin-bottom: 12px;
   border: 1px solid black;
+}
+
+.input-error {
+  border: 1px solid red;
 }
 
 .floating-label {
