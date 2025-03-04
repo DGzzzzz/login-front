@@ -3,11 +3,12 @@
     import Input from '../components/Input/index.vue';
 
     import axios from "axios";
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
 
     const username = ref('');
     const password = ref('');
     const email = ref('');
+    const emailMessage = ref('');
 
     const register = async () => {
         try {
@@ -24,6 +25,23 @@
             alert('Erro ao cadastrar usuário');
         }
     }
+
+    watch(email, async (newEmail) => {
+        if(newEmail.includes("@")) {
+            try {
+                const response = await axios.get(`http://localhost:8080/auth/check-email?email=${newEmail}`);
+                emailMessage.value = response.data.message;
+            } catch (error) {
+                if (error.response && error.response.data.message) {
+                    emailMessage.value = error.response.data.message;
+                } else {
+                    emailMessage.value = "Erro ao verificar E-mail";
+                }
+            }
+        } else {
+            emailMessage.value = "";
+        }
+    })
 </script>
 
 <template>
@@ -39,6 +57,9 @@
                 <Input type="text" id="name" placeholder="Nome" v-model="username"></Input>
                 
                 <Input type="email" id="email" placeholder="E-mail" v-model="email"></Input>
+                <p v-if="emailMessage" :class="{ error: emailMessage === 'E-mail já cadastrado' }">
+                    {{ emailMessage }}
+                </p>
                 
                 <Input type="password" id="senha" placeholder="Senha" v-model="password"></Input>                
             </div>
@@ -53,6 +74,11 @@
 </template>
 
 <style scoped>
+
+.error {
+ color: red;
+ font-size: 14px;
+}
 
 Button:hover {
  opacity: 0.8;
