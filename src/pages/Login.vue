@@ -16,7 +16,8 @@
 
     const login = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/auth/login', {
+            const API_URL = import.meta.env.VITE_API_URL;
+            const response = await axios.post(`${API_URL}/auth/register`, {
                 email: email.value,
                 password: password.value,
             })
